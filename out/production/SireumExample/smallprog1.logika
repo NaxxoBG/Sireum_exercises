@@ -1,0 +1,46 @@
+import org.sireum.logika._
+
+val a: Z = 1
+var b: Z = 0
+
+b = a
+
+l"""{
+    1. a == 1 premise
+    2. b == a premise
+    3. b == 1 subst1 1 2
+}"""
+assert(b == 1)
+
+var x: Z = 0
+l"""{
+    1. x == 0 premise
+    2. b == 1 premise
+    3. x < b algebra 1 2
+}"""
+assert(x < b)
+
+x = b + 1
+
+l"""{
+    1. a == 1 premise
+    2. b == 1 premise
+    3. x == b + 1 premise
+    4. a < x algebra 1 2 3
+}"""
+assert(a < x)
+
+l"""{
+    1. a == 1 premise
+    2. a != 0 algebra 1
+}"""
+val c: Z = x / a
+
+l"""{
+    1. a == 1 premise
+    2. c == x / a premise
+    3. c == x / 1 subst1 1 2
+    4. c == x algebra 3
+}"""
+assert(c == x)
+

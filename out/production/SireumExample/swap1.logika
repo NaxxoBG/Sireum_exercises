@@ -1,0 +1,46 @@
+import org.sireum.logika._
+
+val a: Z = 1
+val b: Z = -1
+
+var x: Z = a
+var y: Z = b
+
+
+l"""{
+    1. x == a premise
+    2. y == b premise
+    3. x == a & y == b andi 1 2
+}"""
+assert(x == a & y == b)
+
+x = x + y
+l"""{
+    1. x_old == a premise
+    2. y == b premise
+    3. x == x_old + y premise
+    4. x == a + y subst1 1 3
+    5. x == a + b subst1 2 4
+}"""
+y = x - y
+l"""{
+    1. y_old == b premise
+    2. y == x - y_old premise
+    3. y == x - b subst1 1 2
+    4. x == a + b premise
+    5. y == (a + b) - b subst1 4 3
+    6. y == a algebra 5
+}"""
+
+x = x - y
+l"""{
+    1. x_old == a + b premise
+    2. x == x_old - y premise
+    3. x == (a + b) - y subst1 1 2
+    4. y == a premise
+    5. x == (a + b) - a subst1 4 3
+    6. x == b algebra 5
+    7. x == b & y == a andi 6 4
+}"""
+
+assert(x == b & y == a)

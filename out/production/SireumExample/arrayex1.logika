@@ -1,0 +1,25 @@
+import org.sireum.logika._
+
+val a: Z = 1
+
+val P: ZS = ZS(1, 2, 3, 4)
+
+// assume (P.size == 4) - if auto check is off
+l"""{
+    1. P.size == 4 premise
+    2. 0 < P.size algebra 1
+    3. 0 <= 0 algebra
+}"""
+P(0) = P(0) - 1
+
+l"""{
+    1. P_old(0) == 1 premise
+    2. P(0) == P_old(0) - 1 premise
+    3. P(0) == 1 - 1 subst1 1 2
+    4. a == 1 premise
+    5. a - 1 == 1 - 1 algebra 4
+    6. P(0) == a - 1 subst2 5 3
+    7. 0 < P.size premise
+}"""
+
+assert(P(0) == a - 1)

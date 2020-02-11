@@ -1,0 +1,44 @@
+import org.sireum.logika._
+
+def absValue(x: Z) : Z = {
+    l"""{
+        requires x != 0
+        ensures result > 0
+    }"""
+
+    var r: Z = 0
+    if (x < 0) {
+        r = -x
+        l"""{
+            1. x < 0 premise
+            2. r == -x premise
+            3. r > 0 algebra 1 2
+        }"""
+    } else {
+        l"""{
+            1. ¬(x < 0) premise
+            2. x != 0 premise
+            3. x > 0 algebra 1 2
+
+        }"""
+        r = x
+        l"""{
+            1. x > 0 premise
+            2. r == x premise
+            3. r > 0 subst2 2 1
+        }"""
+    }
+
+    l"""{
+        1. r > 0 premise
+    }"""
+    return r
+}
+
+val n: Z = readInt()
+if (n != 0) {
+    val m: Z = absValue(n)
+    assert(m > 0)
+}
+
+

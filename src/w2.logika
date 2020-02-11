@@ -1,0 +1,17 @@
+
+p or q, r  |- (p and r) or (q and r)
+{
+  1. p or q                    premise
+  2. r                        premise
+  3. {
+       4. p                   assume
+       5. p and r               andi 4 2
+       6. (p and r) or (q and r)   Vi1 5
+     }
+  7. {
+       8. q                   assume
+       9. q and r               andi 8 2
+      10. (p and r) or (q and r)   Vi2 9
+     }
+ 11. (p and r) or (q and r)        Ve 1 3 7
+}

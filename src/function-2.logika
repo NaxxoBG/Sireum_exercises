@@ -1,0 +1,26 @@
+import org.sireum.logika._
+
+val IntMax:Z = 214748647
+
+val a:Z = readInt()
+
+if (a < 0) {
+    l"""{
+        1. a < 0 premise
+        2. IntMax == 214748647 premise
+        3. a < IntMax algebra 1 2
+    }"""
+    val b: Z = increase(a)
+    assert(b == a + 1)
+}
+
+def increase(x: Z) : Z = {
+    l"""{
+        requires x < IntMax
+        ensures result = x + 1
+    }"""
+    val r: Z = x + 1
+    return r
+}
+
+

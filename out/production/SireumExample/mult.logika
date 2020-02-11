@@ -1,0 +1,21 @@
+import org.sireum.logika._
+
+val m: Z = readInt()
+assume(m >= 10)
+
+val n: Z = readInt()
+assume(n >= 0)
+
+var p: Z = 0
+var k: Z = n
+
+while(k > 0) {
+    l"""{
+            invariant k != 0
+            modifies k, p
+    }"""
+    p = p + m
+    k = k - 1
+}
+
+assert(p == m*n)

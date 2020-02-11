@@ -1,0 +1,81 @@
+import org.sireum.logika._
+
+@pure def mult(x: Z, y: Z): Z = {
+    l"""{
+        requires x >= 0
+                 y >= 0
+        ensures result == x * y
+    }"""
+    if (x == 0) {
+        val r: Z = 0
+        l"""{
+            1. x == 0 premise
+            2. r == 0 premise
+            3. r == x * y algebra 1 2
+        }"""
+        return r
+    } else {
+        l"""{
+            1. x >= 0 premise
+            2. y >= 0 premise
+            3. !(x == 0) premise
+            4. x - 1 >= 0 algebra 1 3
+        }"""
+        val z: Z = mult(x - 1, y)
+        val r: Z = z + y
+        l"""{
+            1. z == (x - 1) * y premise
+            2. r == z + y premise
+            3. r == x * y algebra 1 2
+        }"""
+        return r
+    }
+}
+
+
+val m: Z = readInt()
+assume(m >= 0)
+
+val n: Z = readInt()
+assume(n >= 0)
+
+var p: Z = 0
+var k: Z = n
+
+l"""{
+    1. p == 0 premise
+    2. k == n premise
+    3. p == m  * (n - k) algebra 1 2
+    4. n >= 0 premise
+    5. k >= 0 subst2 2 4
+}"""
+while (k > 0) {
+    l"""{
+        invariant k >= 0
+                  p == m  * (n - k)
+        modifies p, k
+    }"""
+    p = p + m
+    l"""{
+        1. p_old == m  * (n - k) premise
+        2. p == p_old + m premise
+        3. p == m * (n - k) + m subst1 1 2
+    }"""
+    k = k - 1
+    l"""{
+        1. k_old > 0 premise
+        2. k == k_old - 1 premise
+        3. k >= 0 algebra 1 2
+        4. p == m * (n - k_old) + m premise
+        5. p == m  * (n - k) algebra 2 4
+    }"""
+}
+l"""{
+    1. !(k > 0) premise
+    2. k <= 0 algebra 1
+    3. k >= 0 premise
+    4. k == 0 algebra 2 3
+    5. p == m  * (n - k) premise
+    6. p == m  * n algebra 4 5
+}"""
+assert(p == m * n)
